@@ -47,6 +47,20 @@ var StockData = {
 //console.log("Starting State:\n" + JSON.stringify(StockData));
 let server = net.createServer(onUserConnect);
 server.listen(PORT, ADDRESS);
+//NOTIFY
+function notifyClients() {
+    users.forEach((client) => {
+        client.socket.write(JSON.stringify({
+            header: {
+                verb: "NOTIFY",
+                protocol: "SME/TCP-1.0",
+                status: "OK"
+            },
+            SSeq: SSeq++
+        }));
+    });
+    console.log('\nNotified ' + users.length + " users.\n");
+}
 //DISCONNECT SOCKET
 function disconnectSocket(socket) {
     socket.write(JSON.stringify({
@@ -91,6 +105,7 @@ function onUserConnect(socket) {
     //ON INITIAL CONNECTION
     console.log("\nTrader joining at (" + socket.remoteAddress + ":" + socket.remotePort + ")");
     socket.pipe(socket);
+    var thisUser;
     var authenticated = false;
     socket.write("\nConnecting\n");
     socket.on('data', function (data) {
@@ -125,6 +140,7 @@ function onUserConnect(socket) {
                     authenticated = true;
                     console.log("\n" + _data.ID + " requests:");
                     let newUser = new User(_data.ID, socket, _data.CSeq);
+                    thisUser = newUser;
                     users.push(newUser);
                     let userRequest = _data.header.verb + " SME/TCP-1.0\nID: " + _data.ID + ", CSeq: " + _data.CSeq + "\n";
                     console.log(userRequest);
@@ -279,7 +295,7 @@ function onUserConnect(socket) {
                             }
                         });
                         respondOk(socket, _data.CSeq, _data.session);
-                        //NOTIFY
+                        notifyClients();
                     }
                 }
             }
@@ -362,7 +378,7 @@ function onUserConnect(socket) {
                             }
                         });
                         respondOk(socket, _data.CSeq, _data.session);
-                        //NOTIFY
+                        notifyClients();
                     }
                 }
             }
@@ -374,6 +390,15 @@ function onUserConnect(socket) {
         //IF NOT CORRECT PROTOCOL FAIL AND DISCONNECT THE CLIENT
         else {
             disconnectSocket(socket);
+        }
+    });
+    socket.on('end', function () {
+        if (thisUser) {
+            users.splice(users.indexOf(thisUser), 1);
+            console.log("\n" + thisUser.username + " has closed their session\n");
+        }
+        else {
+            console.log("\nTrader left\n");
         }
     });
 }
