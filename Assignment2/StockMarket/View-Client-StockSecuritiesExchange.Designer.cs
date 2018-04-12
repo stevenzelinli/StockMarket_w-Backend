@@ -46,6 +46,12 @@
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.horizontalTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verticalTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serverPort = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.serverIP = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.clientID = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,26 +83,26 @@
             // beginTradingToolStripMenuItem
             // 
             this.beginTradingToolStripMenuItem.Name = "beginTradingToolStripMenuItem";
-            this.beginTradingToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.beginTradingToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.beginTradingToolStripMenuItem.Text = "&Begin Trading";
             this.beginTradingToolStripMenuItem.Click += new System.EventHandler(this.beginTradingToolStripMenuItem_Click);
             // 
             // stopTradingToolStripMenuItem
             // 
             this.stopTradingToolStripMenuItem.Name = "stopTradingToolStripMenuItem";
-            this.stopTradingToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.stopTradingToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.stopTradingToolStripMenuItem.Text = "S&top Trading";
             this.stopTradingToolStripMenuItem.Click += new System.EventHandler(this.stopTradingToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(144, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -185,12 +191,78 @@
             this.verticalTileToolStripMenuItem.Text = "Vertical Tile ";
             this.verticalTileToolStripMenuItem.Click += new System.EventHandler(this.verticalTileToolStripMenuItem_Click);
             // 
+            // serverPort
+            // 
+            this.serverPort.Location = new System.Drawing.Point(1040, 2);
+            this.serverPort.Name = "serverPort";
+            this.serverPort.Size = new System.Drawing.Size(76, 20);
+            this.serverPort.TabIndex = 2;
+            this.serverPort.Text = "8000";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.label1.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.label1.Location = new System.Drawing.Point(974, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Server Port:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // serverIP
+            // 
+            this.serverIP.Location = new System.Drawing.Point(873, 2);
+            this.serverIP.Name = "serverIP";
+            this.serverIP.Size = new System.Drawing.Size(100, 20);
+            this.serverIP.TabIndex = 2;
+            this.serverIP.Text = "localhost";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.SystemColors.Control;
+            this.label2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.label2.Location = new System.Drawing.Point(816, 5);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Server IP:";
+            this.label2.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // clientID
+            // 
+            this.clientID.Location = new System.Drawing.Point(710, 2);
+            this.clientID.Name = "clientID";
+            this.clientID.Size = new System.Drawing.Size(100, 20);
+            this.clientID.TabIndex = 2;
+            this.clientID.Text = "user";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.SystemColors.Control;
+            this.label5.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.label5.Location = new System.Drawing.Point(650, 5);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(58, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Username:";
+            this.label5.Click += new System.EventHandler(this.label1_Click);
+            // 
             // StockSecuritiesExchange
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1119, 525);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.clientID);
+            this.Controls.Add(this.serverIP);
+            this.Controls.Add(this.serverPort);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -224,5 +296,11 @@
         private System.Windows.Forms.ToolStripMenuItem ordersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bidToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem askToolStripMenuItem;
+        private System.Windows.Forms.TextBox serverPort;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox serverIP;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox clientID;
+        private System.Windows.Forms.Label label5;
     }
 }

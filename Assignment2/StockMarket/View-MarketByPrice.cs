@@ -11,7 +11,6 @@ namespace StockExchangeMarket
 {
     public partial class MarketByPrice : Form, StockMarketDisplay
     {
-
         RealTimedata StockMarket;
         String companyName;
         Company selectedCompany;

@@ -25,7 +25,7 @@ function Company(symbol, name, openPrice) {
     this.closePrice = 0;
     this.buyOrders = [];
     this.sellOrders = [];
-    this.transacrions = [];
+    this.transactions = [];
 }
 //ORDER
 function Order(size, price) {
@@ -104,16 +104,16 @@ function respondData(socket, cseq, session, data) {
 function onUserConnect(socket) {
     //ON INITIAL CONNECTION
     console.log("\nTrader joining at (" + socket.remoteAddress + ":" + socket.remotePort + ")");
-    socket.pipe(socket);
     var thisUser;
     var authenticated = false;
-    socket.write("\nConnecting\n");
+    //socket.write("\nConnecting\n");
     socket.on('data', function (data) {
         //PARSE JSON INTO JS OBJECT
         var _data;
         var error = false;
         try {
             _data = JSON.parse(data.toString());
+            //console.log(_data);
         }
         catch (err) {
             //IF NOT JSON SET ERROR FLAG
@@ -125,7 +125,7 @@ function onUserConnect(socket) {
         }
         //CHECK PROTOCOL
         else if (_data.header.protocol == "SME/TCP-1.0") {
-            socket.write("\nChecking\n");
+            //socket.write("\nChecking\n");
             //CHECK VERBS
             //IF NO VERB SENT
             if (!_data.header.verb) {
@@ -241,7 +241,7 @@ function onUserConnect(socket) {
                                         if (order.price >= _data.Data.order.price) {
                                             if (order.size == _data.Data.order.size) {
                                                 sale = new Order(_data.Data.order.size, _data.Data.order.price);
-                                                company.transacrions.push(sale);
+                                                company.transactions.push(sale);
                                                 //DELETE BUY ORDER
                                                 let orderToDelete = company.buyOrders.indexOf(order);
                                                 company.buyOrders.splice(orderToDelete, 1);
@@ -252,7 +252,7 @@ function onUserConnect(socket) {
                                             else if (order.size > _data.Data.order.size) {
                                                 var remainingSize = order.size - _data.Data.order.size;
                                                 sale = new Order(_data.Data.order.size, _data.Data.order.price);
-                                                company.transacrions.push(sale);
+                                                company.transactions.push(sale);
                                                 order.size = remainingSize;
                                                 //UPDATE PRICE
                                                 company.currentPrice = _data.Data.order.price;
@@ -261,7 +261,7 @@ function onUserConnect(socket) {
                                             else if (order.size < _data.Data.order.size) {
                                                 var remainingSize = _data.Data.order.size - order.size;
                                                 sale = new Order(_data.Data.order.size, _data.Data.order.price);
-                                                company.transacrions.push(sale);
+                                                company.transactions.push(sale);
                                                 order.size = remainingSize;
                                                 //UPDATE PRICE
                                                 company.currentPrice = _data.Data.order.price;
@@ -322,7 +322,7 @@ function onUserConnect(socket) {
                                         if (order.price < _data.Data.order.price) {
                                             if (order.size == _data.Data.order.size) {
                                                 sale = new Order(_data.Data.order.size, _data.Data.order.price);
-                                                company.transacrions.push(sale);
+                                                company.transactions.push(sale);
                                                 //DELETE SELL ORDER
                                                 let orderToDelete = company.sellOrders.indexOf(order);
                                                 company.sellOrders.splice(orderToDelete, 1);
@@ -333,7 +333,7 @@ function onUserConnect(socket) {
                                             else if (order.size > _data.Data.order.size) {
                                                 var remainingSize = order.size - _data.Data.order.size;
                                                 sale = new Order(_data.Data.order.size, _data.Data.order.price);
-                                                company.transacrions.push(sale);
+                                                company.transactions.push(sale);
                                                 order.size = remainingSize;
                                                 //UPDATE PRICE
                                                 company.currentPrice = _data.Data.order.price;
@@ -342,7 +342,7 @@ function onUserConnect(socket) {
                                             else if (order.size < _data.Data.order.size) {
                                                 var remainingSize = _data.Data.order.size - order.size;
                                                 sale = new Order(_data.Data.order.size, _data.Data.order.price);
-                                                company.transacrions.push(sale);
+                                                company.transactions.push(sale);
                                                 order.size = remainingSize;
                                                 //UPDATE PRICE
                                                 company.currentPrice = _data.Data.order.price;
