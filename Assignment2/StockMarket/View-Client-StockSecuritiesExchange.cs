@@ -98,7 +98,24 @@ namespace StockExchangeMarket
 
             foreach(JToken company in companies)
             {
-                Subject.addCompany((string)company["symbol"], (string)company["name"], (double)(company["openPrice"]));
+                Company newCompany = Subject.addCompany((string)company["symbol"], (string)company["name"], (double)(company["openPrice"]));
+                newCompany.lastSale = (double)company["currentPrice"];
+                JArray buyOrders = (JArray)company["buyOrders"];
+                JArray sellOrders = (JArray)company["sellOrders"];
+                JArray transactions = (JArray)company["transactions"];
+                foreach (JToken order in buyOrders)
+                {
+                    newCompany.BuyOrders.Add(new BuyOrder((double)order["price"], (int)order["size"]));
+                }
+                foreach (JToken order in sellOrders)
+                {
+                    newCompany.SellOrders.Add(new SellOrder((double)order["price"], (int)order["size"]));
+                }
+                foreach (JToken order in transactions)
+                {
+                    newCompany.Transactions.Add(new SellOrder((double)order["price"], (int)order["size"]));
+                }
+                
             }
 
             this.watchToolStripMenuItem.Visible = true;
